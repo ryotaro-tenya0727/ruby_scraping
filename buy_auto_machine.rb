@@ -30,6 +30,7 @@ pass = ENV['PASS']
 driver.find_element(:xpath, '//*[@id="email"]').send_key email
 driver.find_element(:xpath, '//*[@id="password"]').send_key pass
 driver.find_element(:xpath, '//*[@id="form"]/p[5]/button').click
+driver.get "https://t.livepocket.jp/e/vs30min"
 sleep 500
 
 # driver.quit
