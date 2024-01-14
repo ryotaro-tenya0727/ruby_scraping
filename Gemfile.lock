@@ -1,0 +1,27 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.8.6)
+      public_suffix (>= 2.0.2, < 6.0)
+    dotenv (2.8.1)
+    launchy (2.5.2)
+      addressable (~> 2.8)
+    public_suffix (5.0.4)
+    rexml (3.2.6)
+    rubyzip (2.3.2)
+    selenium-webdriver (4.16.0)
+      rexml (~> 3.2, >= 3.2.5)
+      rubyzip (>= 1.2.2, < 3.0)
+      websocket (~> 1.0)
+    websocket (1.2.10)
+
+PLATFORMS
+  x86_64-darwin-21
+
+DEPENDENCIES
+  dotenv
+  launchy (~> 2.5, >= 2.5.2)
+  selenium-webdriver (~> 4.16)
+
+BUNDLED WITH
+   2.3.19
