@@ -2,7 +2,7 @@ require 'selenium-webdriver'
 require 'dotenv'
 require 'pry'
 
-TICKET_URL = "https://t.livepocket.jp/e/idolkoushien-0223-"
+TICKET_URL = "https://t.livepocket.jp/e/naniyori0116"
 
 options = Selenium::WebDriver::Chrome::Options.new
 # options.add_argument('--headless')
@@ -24,25 +24,33 @@ wait.until { driver.find_element(:id, 'myTicket') }
 driver.get TICKET_URL
 
 # チケットの枚数を選択して購入ボタンを押す
+wait.until { driver.find_element(:id, 'information') }
 select_elements = wait.until { driver.find_elements(:css, 'select[id^="ticket-"]') }
 min_select_element = select_elements.min_by { |element| element.attribute('id').split("-").last.to_i }
 select = Selenium::WebDriver::Support::Select.new(min_select_element)
 select.select_by(:index, 1)
 button = wait.until { driver.find_element(:id, 'submit').find_element(:class, 'btn-procedure-pc-only').find_element(:class, 'register_input_submit_pink') }
+sleep 0.3
 button.click
 
 # 同意ボタンにチェック
 checkbox_element = wait.until { driver.find_element(:id, 'agreement_check_lp') }
+checkbox_element.click
 
-# チェックボックスが未選択の場合、選択する
-unless checkbox_element.selected?
-  checkbox_element.click
-end
+button = wait.until { driver.find_element(:id, 'submit-btn').find_element(:name, 'sbm') }
+button.click
 
-driver.find_element(:id, 'submit-btn').find_element(:name, 'sbm').click
 alert = wait.until { driver.switch_to.alert }
 alert.accept
-binding.pry
+form = wait.until { driver.find_element(:name, 'creditFepChargePaymentInfoReferenceActionForm') }
+code_input = form.find_element(:name, 'securityCode')
+code_input.send_keys ENV['CODE']
+button = driver.find_element(:id, 'exec-button')
+button.click
+form = wait.until { driver.find_element(:name, 'fepChargeIntensionConfirmActionForm') }
+button = form.find_element(:id, 'exec-button')
+button.click
+
 puts driver.title
 sleep 500
 
