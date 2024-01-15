@@ -2,6 +2,8 @@ require 'selenium-webdriver'
 require 'dotenv'
 require 'pry'
 
+TICKET_URL = "https://t.livepocket.jp/e/idolkoushien-0223-"
+
 options = Selenium::WebDriver::Chrome::Options.new
 # options.add_argument('--headless')
 options.add_argument('--window-size=1929,2160')
@@ -19,8 +21,7 @@ driver.find_element(:xpath, '//*[@id="form"]/p[5]/button').click
 wait.until { driver.find_element(:id, 'myTicket') }
 
 # ログイン画面への遷移が確認できたら、チケット詳細画面へ
-ticket_url = "https://t.livepocket.jp/e/idolkoushien-0223-"
-driver.get ticket_url
+driver.get TICKET_URL
 
 # チケットの枚数を選択して購入ボタンを押す
 select_elements = wait.until { driver.find_elements(:css, 'select[id^="ticket-"]') }
