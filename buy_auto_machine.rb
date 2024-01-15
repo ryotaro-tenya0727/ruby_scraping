@@ -6,7 +6,7 @@ options = Selenium::WebDriver::Chrome::Options.new
 # options.add_argument('--headless')
 options.add_argument('--window-size=1929,2160')
 driver = Selenium::WebDriver.for :chrome, options: options #ドライバ選択
-wait = Selenium::WebDriver::Wait.new(timeout: 10)
+wait = Selenium::WebDriver::Wait.new(timeout: 100)
 driver.get "https://t.livepocket.jp/login?acroot=header-new_p_u_nl"
 
 # ログイン処理
@@ -39,7 +39,7 @@ unless checkbox_element.selected?
 end
 
 driver.find_element(:id, 'submit-btn').find_element(:name, 'sbm').click
-alert = driver.switch_to.alert
+alert = wait.until { driver.switch_to.alert }
 alert.accept
 binding.pry
 puts driver.title
